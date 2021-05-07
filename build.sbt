@@ -14,6 +14,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(publishingSettings: _*)
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
+  .settings(testSettings: _*)
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(
     PlayKeys.playDefaultPort := 9250,
@@ -38,7 +39,7 @@ lazy val microservice = Project(appName, file("."))
   )
 
 lazy val testSettings: Seq[Def.Setting[_]] = Seq(
-  fork := true,
+  fork in Test := false,
   javaOptions ++= Seq(
     "-Dconfig.resource=test.application.conf",
     "-Dlogger.resource=logback-test.xml"
