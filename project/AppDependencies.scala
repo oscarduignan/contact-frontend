@@ -15,7 +15,7 @@ object AppDependencies {
     "uk.gov.hmrc"              %% "auth-client"                % "3.3.0-play-27",
     "commons-validator"         % "commons-validator"          % "1.6",
     "org.apache.httpcomponents" % "httpclient"                 % "4.4.1",
-    "uk.gov.hmrc"              %% "play-frontend-hmrc"         % "0.57.0-play-27"
+    "uk.gov.hmrc"              %% "play-frontend-hmrc"         % "0.60.0-play-27"
   )
 
   private def test(scope: String) = Seq(
@@ -31,6 +31,10 @@ object AppDependencies {
     "org.scalacheck"         %% "scalacheck"               % "1.14.0"         % scope,
     "uk.gov.hmrc"            %% "bootstrap-test-play-27"   % "2.25.0"         % scope,
     "uk.gov.hmrc"            %% "domain"                   % "5.11.0-play-27" % scope,
-    "com.vladsch.flexmark"    % "flexmark-all"             % "0.35.10"        % scope
+    "com.vladsch.flexmark"    % "flexmark-all"             % "0.35.10"        % scope,
+    "uk.gov.hmrc"            %% "webdriver-factory"        % "0.18.0"         % scope,
+    "org.scalatestplus"      %% "selenium-3-141"           % "3.2.0.0"        % scope,
+    "uk.gov.hmrc"            %% "zap-automation"           % "2.9.0"          % scope,
+    "com.typesafe"            % "config"                   % "1.3.2"          % scope
   )
 }
