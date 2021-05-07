@@ -32,22 +32,33 @@ class ExampleSpec extends BaseSpec {
 
       go to ExamplePage
       pageTitle shouldBe ExamplePage.title
-      ExamplePage.login(PayOnlinePage.url)
+
+      textField("report-name").value = "Rhiamon Tandy"
+      emailField("report-email").value = "rtandy0@vinaora.com"
+      textArea("report-action").value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sollicitudin ex sit amet tristique dignissim. In tempus elit vehicula, faucibus odio sed, consequat odio. Curabitur cursus non leo et rutrum. Curabitur volutpat ultrices convallis. Integer ante metus, placerat at ante eu, facilisis fringilla quam. Donec sit amet diam ac ante elementum blandit. Cras consectetur sollicitudin sapien, nec accumsan nibh viverra ac.\n\nVestibulum sit amet neque est. Nullam vel ornare sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quis leo rutrum, pretium nibh sit amet, fermentum turpis. Etiam tempus ex id auctor fermentum. Vivamus sed porttitor eros, vitae luctus nulla. Maecenas vel ipsum vel nibh convallis eleifend vel quis dolor. Nam at porta mi. Phasellus sed scelerisque tortor, a scelerisque massa. Duis in tortor sapien. Nulla elementum ultrices ligula a venenatis. Fusce odio erat, consequat sit amet leo sed, blandit sollicitudin lectus."
+      textArea("report-error").value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper tortor ac pellentesque viverra. Pellentesque venenatis sagittis lorem, at auctor."
+
+      click on CssSelectorQuery(".govuk-button[type=submit]")
 
       eventually {
         pageTitle shouldBe PayOnlinePage.title
       }
 
-      When("User chooses to pay VAT tax")
-      val vatId = "tax_to_pay-2"
-      click on radioButton(vatId)
-      click on "next"
-      eventually {
-        pageTitle shouldBe "Choose a way to pay - Pay your VAT - GOV.UK"
-      }
+//      ExamplePage.login(PayOnlinePage.url)
 
-      Then("Choose a way to pay page is displayed")
-      tagName("h1").element.text shouldBe "Choose a way to pay"
+//      eventually {
+//        pageTitle shouldBe PayOnlinePage.title
+//      }
+//
+//      When("User chooses to pay VAT tax")
+//      val vatId = "tax_to_pay-2"
+//      click on radioButton(vatId)
+//      eventually {
+//        pageTitle shouldBe "Choose a way to pay - Pay your VAT - GOV.UK"
+//      }
+//
+//      Then("Choose a way to pay page is displayed")
+//      tagName("h1").element.text shouldBe "Choose a way to pay"
     }
   }
 }

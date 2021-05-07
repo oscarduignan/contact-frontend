@@ -21,8 +21,8 @@ import ui.conf.TestConfiguration
 
 object ExamplePage extends BasePage {
 
-  val url: String = "http://localhost:9250"
-  val title       = "Authority Wizard"
+  val url: String = "http://localhost:9250/contact/problem_reports_nonjs?service=pay"
+  val title       = "Get help with a technical problem - GOV.UK"
 
   def login(redirectionUrl: String)(implicit driver: WebDriver): Unit = {
     textField("redirectionUrl").value = redirectionUrl
