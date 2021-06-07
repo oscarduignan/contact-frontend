@@ -128,3 +128,9 @@ accessibility.confirmation.paragraph=Rydym yn adolygu ac yn ceisio mynd i’r af
 
 testPage.title = Service test page – GOV.UK
 testPage.heading  = Service test page
+
+dateinput.title=Date Input Test Page
+dateinput.heading=Heading for Date Input Test Page
+dateinput.send=Submit Date
+dateinput.confirmation.title=Your Date Input was valid.
+dateinput.confirmation.message=Well done.

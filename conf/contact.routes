@@ -48,3 +48,8 @@ GET         /accessibility/thanks                        @controllers.Accessibil
 GET         /accessibility-unauthenticated               @controllers.AccessibilityController.index(service: Option[String], userAction: Option[String], referrerUrl: Option[String])
 POST        /accessibility-unauthenticated               @controllers.AccessibilityController.submit(service: Option[String], userAction: Option[String])
 GET         /accessibility-unauthenticated/thanks        @controllers.AccessibilityController.thanks()
+
+
+GET         /date-input                                  @controllers.DateInputController.index()
+POST        /date-input                                  @controllers.DateInputController.submit()
+GET         /date-input/thanks                           @controllers.DateInputController.thanks()
