@@ -38,17 +38,23 @@
     @if(dateInputForm.errors.nonEmpty) {
         @govukErrorSummary(ErrorSummary(errorList = dateInputForm.errors.asTextErrorLinks, title = Text(messages("error.summary.title"))))
     }
-    @formWithCSRF(action, 'id -> "date-input-form") {
-
+    @formWithCSRF(action, 'id -> "date-input-form", 'autocomplete -> "on") {
       @dateInput(DateInput(
-          hint = Some(Hint(content = Text(messages("dateinput.hint")))),
+          hint = Some(Hint(
+              content = Text("For example, 31 3 1980")
+          )),
           fieldset = Some(Fieldset(
               legend = Some(Legend(
-                  content = Text(messages("dateinput.heading")),
+                  content = Text("What is your date of birth?"),
                   classes = "govuk-fieldset__legend--l",
                   isPageHeading = true
               ))
-          ))
+          )),
+          items = Seq(
+              InputItem(autocomplete = Some("bday-day")),
+              InputItem(autocomplete = Some("bday-month")),
+              InputItem(autocomplete = Some("bday-year"))
+          ),
       ).withFormField(dateInputForm("date")))
 
       @govukButton(Button(

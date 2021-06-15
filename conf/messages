@@ -129,8 +129,14 @@ accessibility.confirmation.paragraph=We have received your message and will repl
 testPage.title = Service test page – GOV.UK
 testPage.heading = Service test page
 
-dateinput.title=Date Input Test Page
-dateinput.heading=Heading for Date Input Test Page
-dateinput.send=Submit Date
+dateinput.title=When was your passport issued? – GOV.UK
+dateinput.heading=When was your passport issued?
+dateinput.hint=For example, 12 11 2007
+dateinput.send=Continue
 dateinput.confirmation.title=Your Date Input was valid.
 dateinput.confirmation.message=Well done.
+dateinput.day.required=The date your passport was issued must include a day
+dateinput.month.required=The date your passport was issued must include a month
+dateinput.year.required=The date your passport was issued must include a year
+dateinput.invalid=The date your passport was issued must be a real date
+dateinput.invalid.future=The date your passport was issued must be in the past

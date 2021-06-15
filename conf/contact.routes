@@ -51,5 +51,6 @@ GET         /accessibility-unauthenticated/thanks        @controllers.Accessibil
 
 
 GET         /date-input                                  @controllers.DateInputController.index()
+GET         /birthday-input                              @controllers.DateInputController.birthday()
 POST        /date-input                                  @controllers.DateInputController.submit()
 GET         /date-input/thanks                           @controllers.DateInputController.thanks()

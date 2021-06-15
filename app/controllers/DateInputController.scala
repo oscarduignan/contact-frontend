@@ -19,23 +19,38 @@ package controllers
 import config.AppConfig
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Constraints.pattern
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import views.html.{DateInputConfirmationPage, DateInputPage}
+import views.html.{BirthdayInputPage, DateInputConfirmationPage, DateInputPage}
 
+import java.time.LocalDate
 import javax.inject.Inject
+import scala.util.{Failure, Success, Try}
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
-class DateInputController @Inject() (mcc: MessagesControllerComponents, dateInputPage: DateInputPage, dateInputConfirmationPage: DateInputConfirmationPage)(implicit
+class DateInputController @Inject() (
+  mcc: MessagesControllerComponents,
+  dateInputPage: DateInputPage,
+  birthdayInputPage: BirthdayInputPage,
+  dateInputConfirmationPage: DateInputConfirmationPage
+)(implicit
   appConfig: AppConfig
 ) extends FrontendController(mcc) {
 
   def index(): Action[AnyContent] = Action { implicit request =>
     val submitRoute = routes.DateInputController.submit()
-    val form = DateFormBinder.emptyForm
+    val form        = DateFormBinder.emptyForm
     Ok(dateInputPage(form, submitRoute))
   }
 
-  def submit() = Action { implicit request =>
+  def birthday(): Action[AnyContent] = Action { implicit request =>
+    val submitRoute = routes.DateInputController.submit()
+    val form        = DateFormBinder.emptyForm
+    Ok(birthdayInputPage(form, submitRoute))
+  }
+
+  def submit(): Action[AnyContent] = Action { implicit request =>
     DateFormBinder.form
       .bindFromRequest()
       .fold(
@@ -44,25 +59,41 @@ class DateInputController @Inject() (mcc: MessagesControllerComponents, dateInpu
       )
   }
 
-  def thanks() = Action { implicit request =>
+  def thanks(): Action[AnyContent] = Action { implicit request =>
     Ok(dateInputConfirmationPage())
   }
 }
 
-case class DateForm(day: Option[Int], month: Option[Int], year: Option[Int])
+case class DateData(day: String, month: String, year: String)
+case class DateTestData(date: DateData)
 
 object DateFormBinder {
 
-  def emptyForm: Form[DateForm] = DateFormBinder.form.fill(
-    DateForm(None, None, None)
+  def emptyForm: Form[DateTestData] = DateFormBinder.form.fill(
+    DateTestData(DateData("", "", ""))
   )
 
-  def form: Form[DateForm] = Form[DateForm](
+  val dayConstraint: Constraint[String]   = pattern("[0-9]{1,2}".r, error = "dateinput.day.required")
+  val monthConstraint: Constraint[String] = pattern("[0-9]{1,2}".r, error = "dateinput.month.required")
+  val yearConstraint: Constraint[String]  = pattern("[0-9]{1,4}".r, error = "dateinput.year.required")
+
+  val dateConstraint: Constraint[DateData] = Constraint("constraints.date") { dateData =>
+    Try(toDate(dateData)) match {
+      case Success(date) =>
+        if (date.isBefore(LocalDate.now())) Valid else Invalid(Seq(ValidationError("dateinput.invalid.future")))
+      case Failure(_)    => Invalid(Seq(ValidationError("dateinput.invalid")))
+    }
+  }
+
+  private def toDate(date: DateData) = LocalDate.of(date.year.toInt, date.month.toInt, date.day.toInt)
+
+  def form: Form[DateTestData] = Form[DateTestData](
     mapping(
-      "date.day"   -> optional(number).verifying(_.nonEmpty),
-      "date.month" -> optional(number).verifying(_.nonEmpty),
-      "date.year"  -> optional(number).verifying(_.nonEmpty)
-    )(DateForm.apply)(DateForm.unapply)
+      "date" -> mapping(
+        "day"   -> text.verifying(dayConstraint),
+        "month" -> text.verifying(monthConstraint),
+        "year"  -> text.verifying(yearConstraint)
+      )(DateData.apply)(DateData.unapply).verifying(dateConstraint)
+    )(DateTestData.apply)(DateTestData.unapply)
   )
-
 }
