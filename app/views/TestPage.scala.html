@@ -1,0 +1,30 @@
+@import views.html.components.{Layout}
+@import uk.gov.hmrc.play.views.html.helpers.InputRadioGroup
+@import play.api.data.Forms.{single, text}
+
+@this(
+    mainLayout: Layout,
+    inputRadioGroup: InputRadioGroup
+)
+
+@()(implicit request: RequestHeader, messages: Messages, appConfig: AppConfig)
+
+@mainLayout("test page") {
+  
+  @inputRadioGroup(
+    Field(
+      form = Form(
+        single("choice" -> text)
+      ),
+      name = "choice",
+      constraints = Nil,
+      format = None,
+      errors = Seq(
+        FormError(key = "date", "Not a valid choice")
+      ),
+      value = None
+    ),
+    Seq("a" -> "a", "b" -> "b")
+  )
+  
+}
